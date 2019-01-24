@@ -5,8 +5,8 @@
 
 
 class BookViewModel:
-
-    def package_single(self, data, keyword):
+    @classmethod
+    def package_single(cls, data, keyword):
         returned = {
             "books": [],
             "total": 0,
@@ -14,12 +14,24 @@ class BookViewModel:
         }
         if data:
             returned['total'] = 1
-        pass
+            returned['books'] = [cls.__cut_book_data(data)]
+        return returned
 
-    def package_collection(self, data, keyword):
-        pass
+    @classmethod
+    def package_collection(cls, data, keyword):
+        returned = {
+            'books': [],
+            'total': 0,
+            'keyword': keyword
+        }
+        if data:
+            returned['total'] = len(data['books'])
+            returned['books'] = [cls.__cut_book_data(book)
+                                 for book in data['books']]
+        return returned
 
-    def __cut_book_data(self, data):
+    @classmethod
+    def __cut_book_data(cls, data):
         book = {
             'title': data['title'],
             'publisher': data['publisher'],
@@ -30,4 +42,4 @@ class BookViewModel:
             'image': data['image']
 
         }
-        pass
+        return book
