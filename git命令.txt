@@ -1,0 +1,60 @@
+一、开始使用和添加文件到Git仓库
+#初始化一个Git仓库，
+  git init 
+
+#添加文件到Git仓库，分两步：
+
+#将文件添加到暂存区
+  git add <file>
+
+#将文件添加到本地仓库
+  git commit -m <message>
+
+二、
+#将暂存区的文件回退
+  git reset HEAD <file>
+
+#清除工作区文件回退
+  git checkout -- <file>
+
+三、
+#将本地仓库的回滚操作
+#获得需要回滚的commit
+ git log 
+#本地仓库的回滚
+  git reset --hard <commit>
+
+四、
+#清空本地仓库的文件
+  git rm <file>
+  git commit -m <file>
+
+五、远程仓库
+#在本地电脑生成秘钥
+ ssh-keygen -t rsa -C "1176837406@qq.com"
+#在github上新建一个仓库
+
+#添加到远程仓库
+git init
+git add README.md
+git commit -m "first commit"
+
+#将本地仓库可远程仓库关联起来
+git remote add origin git@github.com:hello3306/pass.git
+#将代码推送于仓库
+git push -u origin master
+
+#将代码强制推送与仓库
+git push  origin master -f
+
+#从远程仓库克隆到本地
+ git clone <url>  
+
+#从远程仓库更新到本地
+git pull origin master
+
+git commit：是将本地修改过的文件提交到本地库中；
+git push：是将本地库中的最新信息发送给远程库；
+git pull：是从远程获取最新版本到本地，并自动merge；
+git fetch：是从远程获取最新版本到本地，不会自动merge；
+git merge：是用于从指定的commit(s)合并到当前分支，用来合并两个分支；

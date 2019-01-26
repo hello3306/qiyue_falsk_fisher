@@ -4,7 +4,7 @@ Created by 你好 on 2019/1/19
 import json
 
 ___author___ = '你好'
-from flask import jsonify, request
+from flask import jsonify, request, render_template
 from app.spider.yushu_book import YuShuBook
 from app.libs.helper import is_isbn_or_key
 from . import web
@@ -34,3 +34,13 @@ def search():
         # return jsonify(books)
     else:
         return jsonify(form.errors)
+
+
+@web.route('/test')
+def test():
+    r = {
+        'name': 'hello',
+        'age': 22
+    }
+    # return jsonify(r)
+    return render_template('test.html', data=r)
