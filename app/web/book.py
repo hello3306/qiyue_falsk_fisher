@@ -43,4 +43,4 @@ def test():
         'age': 22
     }
     # return jsonify(r)
-    return render_template('test.html', data=r)
+    return render_template('test2.html', data=r)
