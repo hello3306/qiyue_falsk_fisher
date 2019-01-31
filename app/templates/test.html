@@ -1,9 +1,12 @@
 {% extends 'layout.html' %}
 {% block content %}
     {# 这是注释 #}
+    {{ super() }}
     {% if data.age == 18 %}
         {{ data.name }}
+
     {% else %}
         {{ data.age }}
+        {{ data.school | default('不存在') }}
     {% endif %}
 {% endblock %}
