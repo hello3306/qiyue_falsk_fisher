@@ -1,14 +1,14 @@
 """
 Created by 你好 on 2019/1/20
 """
+from app.models.base import db
+
 ___author___ = '你好'
 
 from sqlalchemy import Column, Integer, String
-from flask_sqlalchemy import SQLAlchemy
+
 
 # flask-sqlalchemy flask 操作数据库
-
-db = SQLAlchemy()
 
 
 class Book(db.Model):

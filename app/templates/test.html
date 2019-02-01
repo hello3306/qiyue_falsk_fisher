@@ -8,5 +8,8 @@
     {% else %}
         {{ data.age }}
         {{ data.school | default('不存在') }}
+        {% with messages= get_flashed_messages() %}
+        {{ messages }}
+        {% endwith %}
     {% endif %}
 {% endblock %}

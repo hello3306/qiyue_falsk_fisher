@@ -4,7 +4,7 @@ Created by 你好 on 2019/1/19
 import json
 
 ___author___ = '你好'
-from flask import jsonify, request, render_template
+from flask import jsonify, request, render_template, flash
 from app.spider.yushu_book import YuShuBook
 from app.libs.helper import is_isbn_or_key
 from . import web
@@ -30,10 +30,20 @@ def search():
             yushu_book.search_by_keyword(q, page)
 
         books.fill(yushu_book, page)
-        return json.dumps(books, default=lambda o: o.__dict__)
+        # return json.dumps(books, default=lambda o: o.__dict__)
         # return jsonify(books)
     else:
-        return jsonify(form.errors)
+        flash('搜索的关键字不符合要求，请重新输入关键字')
+        # return jsonify(form.errors)
+    return render_template('search_result.html', books=books)
+
+
+@web.route('/book/<isbn>/detail')
+def book_detail(isbn):
+    yushu_book = YuShuBook()
+    yushu_book.search_by_isbn(isbn)
+    book = BookViewModel(yushu_book.first)
+    return render_template('book_detail.html', book=book, wishes=[], gifts=[])
 
 
 @web.route('/test')
@@ -42,5 +52,7 @@ def test():
         'name': 'hello',
         'age': 22
     }
+    flash('hello,lj', category='error')
+    flash('hello,lj2', category='waring')
     # return jsonify(r)
     return render_template('test.html', data=r)

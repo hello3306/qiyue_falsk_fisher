@@ -2,3 +2,6 @@ http://localhost:81/book/search?q=9787070511209
 
 
 http://localhost:81/book/search?q=ºìÂ¥ÃÎ
+
+#×¢²á
+http://localhost:81/register
