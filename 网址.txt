@@ -5,3 +5,9 @@ http://localhost:81/book/search?q=红楼梦
 
 #注册
 http://localhost:81/register
+
+#登录
+http://localhost:81/login
+
+#需要授权才能访问的
+http://localhost:81/my/gifts
