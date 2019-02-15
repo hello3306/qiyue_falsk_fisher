@@ -1,4 +1,4 @@
-from flask import current_app, flash
+from flask import current_app, flash, redirect, url_for
 
 from app.models.base import db
 from app.models.gift import Gift
@@ -21,21 +21,23 @@ def my_gifts():
 def save_to_gifts(isbn):
     if current_user.can_save_to_list(isbn):
         # 事物
-        try:
+        # try:
+        with db.auto_commit():
             gift = Gift()
             gift.isbn = isbn
             gift.uid = current_user.id
             current_user.beans += current_app.config['BEANS_UPLOAD_ONE_BOOK']
             db.session.add(gift)
-            db.session.commit()
-        except Exception as e:
-            # 事物回滚
-            db.session.rollback()
-            # 抛出异常
-            raise e
+            # db.session.commit()
+        # except Exception as e:
+        #     # 事物回滚
+        #     db.session.rollback()
+        #     # 抛出异常
+        #     raise e
 
     else:
         flash('这本书已经添加至赠送清单或在你的心愿清单了，请不要重复添加')
+    return redirect(url_for('web.book_detail', isbn=isbn))
 
 
 @web.route('/gifts/<gid>/redraw')
