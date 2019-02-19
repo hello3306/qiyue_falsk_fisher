@@ -8,3 +8,6 @@ PER_PAGE = 15
 
 # 鱼豆
 BEANS_UPLOAD_ONE_BOOK = 0.5
+
+# 返回书籍数量
+RECENT_BOOK_COUNT = 30

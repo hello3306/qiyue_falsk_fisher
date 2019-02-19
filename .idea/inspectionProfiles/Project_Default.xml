@@ -5,6 +5,7 @@
       <option name="ignoredIdentifiers">
         <list>
           <option value="app.models.user.login_mananger" />
+          <option value="str.in_" />
         </list>
       </option>
     </inspection_tool>
