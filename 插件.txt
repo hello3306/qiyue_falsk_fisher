@@ -1,0 +1,2 @@
+#µç×ÓÓÊ¼ş
+pip install flask-mail

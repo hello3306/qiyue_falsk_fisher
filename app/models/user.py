@@ -2,6 +2,7 @@
  Hello 
 
 """
+from flask import current_app
 from sqlalchemy import Column, Integer, String, Boolean, Float
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -12,6 +13,7 @@ from app import login_manager
 from app.models.gift import Gift
 from app.models.wish import Wish
 from app.spider.yushu_book import YuShuBook
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 
 class User(Base, UserMixin):
@@ -57,6 +59,18 @@ class User(Base, UserMixin):
             return True
         else:
             return False
+
+    # 生成token
+    def generate_token(self, expiration=600):
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+        # 用户信息的写入
+        temp = s.dumps({'id': self.id}).decode('utf-8')
+        return temp
+
+    # 重置密码
+    @staticmethod
+    def reset_password(new_password):
+        pass
 
 
 @login_manager.user_loader
