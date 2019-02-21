@@ -2,7 +2,8 @@
  Hello 
 
 """
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, ForeignKey, SmallInteger
+from sqlalchemy.orm import relationship
 
 from app.models.base import Base
 
@@ -31,3 +32,11 @@ class Drift(Base):
     gifter_id = Column(Integer)
     gift_id = Column(Integer)
     gifter_nickname = Column(String(20))
+
+    # 鱼漂状态
+    pending = Column('pending', SmallInteger, default=1)
+
+    # requester_id = Column(Integer, ForeignKey('user.id'))
+    # requester = relationship('User')
+    # gift_id =Column(Integer,ForeignKey('gift.id'))
+    # gift = relationship('Gift')

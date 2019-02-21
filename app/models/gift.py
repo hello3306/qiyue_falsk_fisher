@@ -16,12 +16,16 @@ from collections import namedtuple
 
 class Gift(Base):
     id = Column(Integer, primary_key=True)
+    # 模型关联
     user = relationship('User')
     uid = Column(Integer, ForeignKey('user.id'))
     isbn = Column(String(15), nullable=False)
     # book = relationships('Book')
     # bid = Column(Integer, ForeignKey('book.id'))
     launched = Column(Boolean, default=False)
+
+    def is_yourself_gift(self, uid):
+        return True if self.uid == uid else False
 
     # 获取用户的礼物
     @classmethod
@@ -60,5 +64,3 @@ class Gift(Base):
             desc(Gift.create_time)).limit(
             current_app.config['RECENT_BOOK_COUNT']).all()
         return recent_gift
-
-
