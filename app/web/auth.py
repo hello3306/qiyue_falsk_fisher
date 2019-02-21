@@ -58,6 +58,8 @@ def forget_password_request():
             from app.libs.email import send_mail
             send_mail(form.email.data, '重置你的密码', 'email/reset_password.html',
                       user=user, token=user.generate_token())
+            flash('一封邮件已发送到邮箱'+account_email+',请及时查收')
+            # return redirect(url_for('web.login'))
         pass
     return render_template('auth/forget_password_request.html', form=form)
 
@@ -66,9 +68,13 @@ def forget_password_request():
 def forget_password(token):
     form = ResetPasswordForm(request.form)
     if request.method == "POST" and form.validate():
-        pass
-    return render_template('auth/forget_password.html')
-    pass
+        success = User.reset_password(token, form.password1.data)
+        if success:
+            flash('你的密码已更新，请使用新密码登录')
+            return redirect(url_for('web.login'))
+        else:
+            flash('密码重置失败')
+    return render_template('auth/forget_password.html', form=form)
 
 
 @web.route('/change/password', methods=['GET', 'POST'])
