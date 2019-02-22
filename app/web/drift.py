@@ -1,5 +1,6 @@
 from flask import flash, redirect, url_for, render_template, request
 from flask_login import login_required, current_user
+from sqlalchemy import desc, or_
 
 from app.froms.book import DriftForm
 from app.libs.email import send_mail
@@ -29,6 +30,7 @@ def send_drift(gid):
         send_mail(current_gift.user.email, '有人想要一本书', 'email/get_gift.html',
                   wisher=current_user,
                   gift=current_gift)
+        return redirect(url_for('web.pending'))
     gifter = current_gift.user.summary
     return render_template('drift.html',
                            gifter=gifter,
@@ -37,7 +39,12 @@ def send_drift(gid):
 
 
 @web.route('/pending')
+@login_required
 def pending():
+    drifts = Drift.query.filter(
+        or_(Drift.requester_id == current_user.id, Drift.gifter_id == current_user.id)).order_by(
+        desc(Drift.create_time)
+    ).all()
     pass
 
 
