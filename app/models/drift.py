@@ -5,6 +5,7 @@
 from sqlalchemy import Column, Integer, String, ForeignKey, SmallInteger
 from sqlalchemy.orm import relationship
 
+from app.libs.enums import PendingStatus
 from app.models.base import Base
 
 
@@ -16,7 +17,7 @@ class Drift(Base):
     recipient_name = Column(String(20), nullable=False)
     address = Column(String(100), nullable=False)
     message = Column(String(200))
-    mobil = Column(String(20), nullable=False)
+    mobile = Column(String(20), nullable=False)
 
     # 书籍信息
     isbn = Column(String(13))
@@ -34,7 +35,15 @@ class Drift(Base):
     gifter_nickname = Column(String(20))
 
     # 鱼漂状态
-    pending = Column('pending', SmallInteger, default=1)
+    _pending = Column('pending', SmallInteger, default=1)
+
+    @property
+    def pending(self):
+        return PendingStatus(self._pending)
+
+    @pending.setter
+    def pending(self, status):
+        self._pending = status.value
 
     # requester_id = Column(Integer, ForeignKey('user.id'))
     # requester = relationship('User')
